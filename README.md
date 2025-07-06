@@ -1,38 +1,57 @@
-# Chat Streamlit / Ngrok
+# Chat Streamlit / Cloudflare Tunnel
 
-Este proyecto implementa un sistema de chat simple utilizando sockets TCP y Streamlit como interfaz web. Los mensajes se transmiten a través de un servidor central accesible desde internet mediante Ngrok.
+Este proyecto implementa un sistema de chat simple utilizando sockets TCP y Streamlit como interfaz web. Los mensajes se transmiten a través de un servidor central accesible desde internet mediante **Cloudflare Tunnel**.
 
 ## Requisitos
 
 Antes de ejecutar el programa, asegúrate de tener instalado lo siguiente:
 
-- Python 3.8 o superior
-- Streamlit
-- Ngrok (con cuenta gratuita verificada)
+* Python 3.8 o superior
+* Streamlit
+* Cloudflared
 
-Instalación de dependencias:  
+Instalación de dependencias:
+
 ```bash
-pip install streamlit
+pip install streamlit streamlit-autorefresh qrcode pillow
 ```
-## Configuración de Ngrok:
 
-- Crea una cuenta gratuita en https://ngrok.com
-- Descarga e instala Ngrok según tu sistema operativo.
-- Autentica tu cuenta ejecutando:
+## Instalación de Cloudflared
+
+Puedes instalar Cloudflared siguiendo estos pasos:
+
+* Descarga la versión correspondiente a tu sistema operativo desde:
+  [https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install/](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install/)
+* Asegúrate de que el ejecutable `cloudflared` esté en tu variable de entorno `PATH`.
+
+Verifica la instalación con:
+
 ```bash
-ngrok config add-authtoken TU_TOKEN_AQUI
+cloudflared --version
 ```
-##  Ejecución del sistema
 
-Para ejecutar el sistema completo, simplemente corre:
+## Ejecución del sistema
+
+Para lanzar todo el sistema, ejecuta:
+
 ```bash
 python launcher.py
 ```
 
 Este script realizará lo siguiente:
 
-- Iniciará el servidor TCP
-- Abrirá Ngrok para publicar el frontend de Streamlit
-- Ejecutará el cliente web
-- Mostrará la URL pública generada por Ngrok
-- Generará un código QR con acceso directo al chat
+* Iniciará el servidor de chat (broker TCP)
+* Ejecutará la interfaz gráfica de cliente con Streamlit
+* Activará un túnel de Cloudflare para hacer público el frontend
+* Mostrará la URL generada
+* Generará un código QR para facilitar el acceso desde dispositivos móviles
+
+## Características
+
+* Interfaz web moderna y funcional (con separación por autor, timestamps y temas)
+* Envío en tiempo real entre usuarios conectados
+* Lista dinámica de usuarios activos
+* Soporte multiplataforma
+* Código QR generado automáticamente
+
+
