@@ -42,10 +42,6 @@ def mostrar_qr(link):
     qr.add_data(link)
     qr.make(fit=True)
 
-    print("\n📱 Escanea este código QR para abrir el chat desde tu celular o navegador externo:\n")
-    qr.print_ascii(invert=True)
-
-    # Opcional: mostrar imagen del QR con visor predeterminado
     img = qr.make_image(fill="black", back_color="white")
     img_path = "qr_chat.png"
     img.save(img_path)
