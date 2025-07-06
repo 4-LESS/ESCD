@@ -46,12 +46,4 @@ Este script realizará lo siguiente:
 * Mostrará la URL generada
 * Generará un código QR para facilitar el acceso desde dispositivos móviles
 
-## Características
-
-* Interfaz web moderna y funcional (con separación por autor, timestamps y temas)
-* Envío en tiempo real entre usuarios conectados
-* Lista dinámica de usuarios activos
-* Soporte multiplataforma
-* Código QR generado automáticamente
-
 
