@@ -18,11 +18,11 @@ pip install streamlit streamlit-autorefresh qrcode pillow
 
 ## Instalación de Cloudflared
 
-Puedes instalar Cloudflared siguiendo estos pasos:
+Puedes instalar Cloudflared usando la herramienta Winget:
 
-* Descarga la versión correspondiente a tu sistema operativo desde:
-  [https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install/](https://developers.cloudflare.com/cloudflare-one/connections/connect-apps/install/)
-* Asegúrate de que el ejecutable `cloudflared` esté en tu variable de entorno `PATH`.
+```bash
+winget install --id Cloudflare.cloudflared
+```
 
 Verifica la instalación con:
 
