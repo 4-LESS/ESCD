@@ -8,7 +8,7 @@ from io import BytesIO
 import webbrowser
 
 
-NGROK_PATH = "ngrok"  # o la ruta completa a tu ejecutable de ngrok
+NGROK_PATH = "ngrok"  
 PUERTO_STREAMLIT = 8501
 
 def iniciar_servidor():
@@ -49,13 +49,7 @@ def mostrar_qr(link):
     img = qr.make_image(fill="black", back_color="white")
     img_path = "qr_chat.png"
     img.save(img_path)
-    try:
-        if os.name == "nt":
-            os.startfile(img_path)
-        else:
-            subprocess.run(["xdg-open", img_path])
-    except Exception as e:
-        print("⚠️ No se pudo abrir la imagen del QR:", e)
+
 
 def main():
     servidor = iniciar_servidor()
