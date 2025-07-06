@@ -1,10 +1,13 @@
+# client_str.py (UI + lógica del proxy integrado)
+
 import socket
 import streamlit as st
 from datetime import datetime
 from streamlit_autorefresh import st_autorefresh
-from PIL import Image
 import os
-import streamlit.components.v1 as components
+import shutil
+
+
 
 # === CONFIG ===
 SERVER_HOST = "127.0.0.1"
@@ -24,31 +27,44 @@ for estado in estados:
 # === AUTOREFRESH ===
 st_autorefresh(interval=500, key="autorefresh")
 
-# === FUNCIONES AUXILIARES ===
-def conectar():
+# === FUNCIONES DE RED ===
+def conectar_al_broker(alias):
     try:
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((SERVER_HOST, SERVER_PORT))
+        sock.send(f"ALIAS:{alias}".encode())
         sock.setblocking(False)
-        return sock
+        st.session_state.socket = sock
+        st.session_state.alias = alias
+        st.session_state.conectado = True
+        return True
     except Exception as e:
         st.error(f"Error al conectar con el servidor: {e}")
-        st.stop()
+        return False
 
 def recibir():
     try:
         sock = st.session_state.socket
         while True:
             try:
-                msg = sock.recv(1024).decode()
+                msg = sock.recv(2048).decode()
                 if msg.startswith("__USERS__|"):
-                    st.session_state.usuarios = msg.split("|", 1)[1].split(",")
+                    st.session_state.usuarios = sorted(msg.split("|", 1)[1].split(","))
                 elif msg and msg not in st.session_state.mensajes:
                     st.session_state.mensajes.append(msg)
             except BlockingIOError:
                 break
     except:
         pass
+
+# === FUNCIONES DE UI ===
+
+st.set_page_config(
+    page_title="notDiscord",                          # Cambia el título que aparece en la pestaña del navegador
+    page_icon=":cat:",      # Puedes usar emojis o ruta a una imagen local (.png)
+    layout="centered",                               # Opcional: layout de la página
+    initial_sidebar_state="collapsed"                     # Opcional: estado inicial del sidebar
+)
 
 def extraer_datos_mensaje(msg):
     if msg.startswith("[") and "]" in msg:
@@ -156,10 +172,8 @@ if not st.session_state.conectado:
         if alias.strip() == "":
             st.warning("Debes ingresar un nombre.")
         else:
-            st.session_state.alias = alias.strip()
-            st.session_state.socket = conectar()
-            st.session_state.socket.send(f"ALIAS:{st.session_state.alias}".encode())
-            st.session_state.conectado = True
+            if conectar_al_broker(alias.strip()):
+                st.rerun()
 else:
     render_mensajes(st.session_state.mensajes[-30:])
 
