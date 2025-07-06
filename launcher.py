@@ -65,6 +65,7 @@ def esperar_disponibilidad(url, timeout=30):
 def mostrar_qr(link):
     qr = qrcode.QRCode()
     qr.add_data(link)
+    qr.make(fit=True)
     img = qr.make_image(fill="black", back_color="white")
     img.save("qr_chat.png")
     print("🖨️  QR generado en 'qr_chat.png'.")
