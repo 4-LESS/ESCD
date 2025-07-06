@@ -7,7 +7,7 @@ import os
 import streamlit.components.v1 as components
 
 # === CONFIG ===
-SERVER_HOST = "127.0.0.1"
+SERVER_HOST = "servidor"
 SERVER_PORT = 5000
 
 # === ESTADOS DE SESIÓN ===

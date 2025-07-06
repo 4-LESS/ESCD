@@ -1,0 +1,33 @@
+
+services:
+  servidor:
+    build: ./server
+    container_name: servidor_tcp
+    ports:
+      - "5000:5000"
+    networks:
+      - red_chat
+
+  cliente1:
+    build: ./client
+    container_name: cliente_web1
+    ports:
+      - "8501:8501"
+    networks:
+      - red_chat
+    depends_on:
+      - servidor
+
+  cliente2:
+    build: ./client
+    container_name: cliente_web2
+    ports:
+      - "8502:8501"
+    networks:
+      - red_chat
+    depends_on:
+      - servidor
+
+networks:
+  red_chat:
+    driver: bridge
