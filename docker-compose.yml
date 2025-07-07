@@ -1,0 +1,35 @@
+services:
+  server:
+    build:
+      context: ./server
+    container_name: ecsd-server
+    ports:
+      - "5000:5000"
+    networks:
+      - chatnet
+
+  cliente1:
+    build:
+      context: ./client
+    container_name: ecsd-cliente1
+    ports:
+      - "8501:8501"
+    environment:
+      - SERVER_HOST=server
+    networks:
+      - chatnet
+    depends_on:
+      - server
+
+  tunnel:
+    build:
+      context: ./cloudflared
+    container_name: ecsd-tunnel
+    networks:
+      - chatnet
+    depends_on:
+      - cliente1
+
+networks:
+  chatnet:
+    driver: bridge

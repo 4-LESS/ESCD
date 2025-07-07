@@ -13,12 +13,12 @@ PUERTO_STREAMLIT = 8501
 
 def iniciar_servidor_broker():
     print("🟢 Iniciando servidor broker (TCP)...")
-    return subprocess.Popen(["python", "server.py"])
+    return subprocess.Popen(["python", "server/server.py"])
 
 def iniciar_cliente_streamlit():
     print("🟢 Iniciando cliente Streamlit...")
     return subprocess.Popen(
-        ["streamlit", "run", "client_str.py", "--server.headless=true", "--browser.gatherUsageStats=false"],
+        ["streamlit", "run", "client/client_str.py", "--server.headless=true", "--browser.gatherUsageStats=false"],
         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
     )
 
